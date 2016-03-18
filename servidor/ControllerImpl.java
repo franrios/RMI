@@ -8,12 +8,12 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
     private List<Ap> apList;
     private List<Association> associationList;
 
-  //  private List<Ssid> ssidlist;
-//    private List<Station> stationlist;
+    // private List<Ssid> ssidlist;
+    // private List<Station> stationlist;
 
     ControllerImpl() throws RemoteException {
         apList = new LinkedList<Ap>();
-      //  ssidlist = new LinkedList<Ssid>();
+        // ssidlist = new LinkedList<Ssid>();
         associationList = new LinkedList<Association>();
     }
 
