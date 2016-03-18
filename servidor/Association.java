@@ -3,12 +3,12 @@ import java.io.*;
 class Association {
     private Ap ap;
     private Station station;
-    
+
     Association(Ap ap, Station station) {
       this.ap = ap;
       this.station = station;
     }
-    
+
     public Ap getAp() {
       return ap;
     }
