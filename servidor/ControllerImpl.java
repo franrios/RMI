@@ -4,25 +4,25 @@ import java.rmi.server.*;
 import java.util.*;
 
 class ControllerImpl extends UnicastRemoteObject implements Controller {
-    
-    private List<AP> aplist;
-    private List<SSID> ssidlist;
+
+    private List<Ap> aplist;
+    private List<Ssid> ssidlist;
     private List<Station> stationlist;
 
     ControllerImpl() throws RemoteException {
-        aplist = new LinkedList<AP>();
-        ssidlist = new LinkedList<SSID>();
+        aplist = new LinkedList<Ap>();
+        ssidlist = new LinkedList<Ssid>();
         stationlist = new LinkedList<Station>();
     }
-    
+
     // ??????????????
-    public AP registerStation(Station station) throws RemoteException {
-        AP ap = new APImpl(station);
+    public Ap registerStation(Station station) throws RemoteException {
+        Ap ap = new ApImpl(station);
         l.add(ap);
         return ap;
     }
 
-    public List<AP> getStations() throws RemoteException {
+    public List<Ap> getStations() throws RemoteException {
         return l;
     }
 }

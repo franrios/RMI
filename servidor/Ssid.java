@@ -1,15 +1,15 @@
 import java.io.*;
 
-class SSID implements Serializable {
+class Ssid implements Serializable {
     private String ssidname;
     private String password;
-    
+
     SSID(String ssidname, String password) {
       this.ssidname = ssidname;
       this.password = password;
     }
-    
-    public String getSSIDname() {
+
+    public String getSsidname() {
       return ssidname;
     }
 
