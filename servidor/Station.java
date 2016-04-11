@@ -22,4 +22,16 @@ class Station implements Serializable {
     public String getHostname() {
       return hostname;
     }
+
+    public void setIp(String ip) {
+      this.ip = ip;
+    }
+
+    public void setMac(String mac) {
+      this.mac = mac;
+    }
+
+    public void setHostname(String hostname) {
+      this.hostname = hostname;
+    }
 }

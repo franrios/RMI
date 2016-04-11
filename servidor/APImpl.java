@@ -1,28 +1,29 @@
 import java.io.*;
 import java.rmi.*;
 import java.rmi.server.*;
+import java.util.*;
 
 class APImpl extends UnicastRemoteObject implements AP {
     
-    private list<string> ssidlist;
+    private List<String> ssidList;
     private int maxSSID;
     private int id;
 
     APImpl(int id, int maxSSID) throws RemoteException {
         this.id = id;
         this.maxSSID = maxSSID;
-        ssid = new LinkedList<string>();
+        ssidList = new LinkedList<String>();
     }
 
-    public void addSSID(string ssid) throws RemoteException {
-        ssidlist.add(ssid);
+    public void addSSID(String ssid) throws RemoteException {
+        ssidList.add(ssid);
     }
 
-    public void removeSSID(string ssid) throws RemoteException {
+    public void removeSSID(String ssid) throws RemoteException {
         int index = 0;
-        for (string i:ssidlist){
+        for (String i:ssidList){
             if (i.isEqual(ssid))
-                ssidlist.remove(index);
+                ssidList.remove(index);
             index ++;
         }
     }
