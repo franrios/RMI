@@ -17,10 +17,20 @@ class Client {
         try {
 
             Controller srv = (Controller) Naming.lookup("//" + args[0] + ":" + args[1] + "/Controller");
-            Station station = new Station(args[2], args[3], args[4]);
+            // Station = Log
+            Station station = new Station(args[2], args[3]); //, args[4]);
+            // Ap = ServicioLog
             AP ap = srv.registerStation();
-            
+            // registerStation = crearLog
+
             List <AP> list;
+            list = srv.getStations();
+
+            for (Ap i:list) {
+              int a = i.getID();
+              System.out.println("Id es " + a);
+
+            }
         }
         catch (RemoteException e) {
             System.err.println("Error de comunicacion: " + e.toString());
