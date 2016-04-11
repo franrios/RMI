@@ -4,11 +4,13 @@ class Station implements Serializable {
     private String ip;
     private String mac;
     private String hostname;
+    private Position position;
     
-    Station(String ip, String mac, String hostname) {
+    Station(String ip, String mac, String hostname, Position position) {
       this.ip = ip;
       this.mac = mac;
       this.hostname = hostname;
+      this.position = position;
     }
     
     public String getIp() {
@@ -23,6 +25,10 @@ class Station implements Serializable {
       return hostname;
     }
 
+    public Position getPosition() {
+      return position;
+    }
+
     public void setIp(String ip) {
       this.ip = ip;
     }
@@ -33,5 +39,9 @@ class Station implements Serializable {
 
     public void setHostname(String hostname) {
       this.hostname = hostname;
+    }
+
+    public void setPosition(Position position) {
+      this.position = position;
     }
 }

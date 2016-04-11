@@ -17,24 +17,17 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
         associationList = new LinkedList<Association>();
     }
 
-
-    public Association isStationConnected(Station station) throws RemoteException{
-      Association aux = null;
-
-      for (Association i: this.associationList) {
-        if (i.getStation().getMac().equals(station.getMac()))
-          aux = i;
-      }
-      return aux;
-    }
-
     public Ap connect(Station station) throws RemoteException{
       Association aux = isStationConnected(station);
-      Ap defaultAp = new ApImpl(9999,"localhost", "54321");
+      Ap defaultAp = new ApImpl("localhost", "54321","9999",new Position(5.0,5.0,14.0));
       if (aux != null)
         aux.setAp(defaultAp);
       else
         associationList.add(new Association(defaultAp, station));
+
+      System.out.println(station.getPosition().calculateDistance(defaultAp.getPosition()));
+      System.out.println(station.getPosition().toString());
+      System.out.println(defaultAp.getPosition().toString());
 
       return defaultAp;
     }
@@ -51,12 +44,22 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
       return result;
     }
 
+    public Association isStationConnected(Station station) throws RemoteException{
+      Association aux = null;
+
+      for (Association i: this.associationList) {
+        if (i.getStation().getMac().equals(station.getMac()))
+          aux = i;
+      }
+      return aux;
+    }
+
     private Boolean isAPRegistered(Ap ap) throws RemoteException{
       Boolean result = false;
-        for(Ap i: this.apList)
-          if (i.getID() == ap.getID())
-            result = true;
 
+      for(Ap i: this.apList)
+        if (i.getID().equals(ap.getID()))
+          result = true;
 
       return result;
     }
