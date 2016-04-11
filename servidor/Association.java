@@ -21,7 +21,7 @@ class Association {
       this.ap = ap;
     }
 
-    public void setStation(String station) {
+    public void setStation(Station station) {
       this.station = station;
     }
 }

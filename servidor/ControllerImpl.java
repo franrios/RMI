@@ -18,28 +18,46 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
     }
 
 
-    private Association isStationConnected(Station station) throws RemoteException{
+    public Association isStationConnected(Station station) throws RemoteException{
       Association aux = null;
 
-      for (i: this.associationList) {
-        if (i.getStation().getMac() == station.getMac())
-        aux = i;
+      for (Association i: this.associationList) {
+        if (i.getStation().getMac().equals(station.getMac()))
+          aux = i;
       }
       return aux;
     }
 
     public Ap connect(Station station) throws RemoteException{
       Association aux = isStationConnected(station);
-      defaultAp = apList.get(1);
-      if (aux != null){
+      Ap defaultAp = new ApImpl(9999,"localhost", "54321");
+      if (aux != null)
         aux.setAp(defaultAp);
-        }
       else
         associationList.add(new Association(defaultAp, station));
-      }
+
+      return defaultAp;
     }
 
     public Boolean registerAp(Ap ap) throws RemoteException{
-      return this.apList.add(ap);
+      Boolean result = false;
+
+      if (this.isAPRegistered(ap))
+        System.out.println("AP with ID " + ap.getID() + ", already registered.");
+      else if ((result = this.apList.add(ap)) == true)
+        System.out.println("AP with ID " + ap.getID() + ", successfully registered.");
+      
+
+      return result;
+    }
+
+    private Boolean isAPRegistered(Ap ap) throws RemoteException{
+      Boolean result = false;
+        for(Ap i: this.apList)
+          if (i.getID() == ap.getID())
+            result = true;
+
+
+      return result;
     }
 }

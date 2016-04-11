@@ -15,11 +15,11 @@ class ControllerServer  {
             Naming.rebind("rmi://localhost:" + args[0] + "/Controller", srv);
         }
         catch (RemoteException e) {
-            System.err.println("Error de comunicacion: " + e.toString());
+            System.err.println("Communication error: " + e.toString());
             System.exit(1);
         }
         catch (Exception e) {
-            System.err.println("Excepcion en ControllerServer:");
+            System.err.println("ControllerServer Exception:");
             e.printStackTrace();
             System.exit(1);
         }

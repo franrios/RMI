@@ -10,6 +10,14 @@ class ApImpl extends UnicastRemoteObject implements Ap {
     private int id;
     private Controller srv;
 
+    static public void main (String args[]) {
+        try{
+            Ap ap = new ApImpl(1,"localhost","54321");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     ApImpl(int id, String controllerHost, String controllerPort) throws RemoteException {
         this.id = id;
         //this.maxSSID = maxSSID;
@@ -22,7 +30,7 @@ class ApImpl extends UnicastRemoteObject implements Ap {
 
             this.srv = (Controller) Naming.lookup("//" + controllerHost + ":" + controllerPort + "/Controller");
             if (this.srv.registerAp(this) == false)
-                System.err.println("Error during AP registration." + e.toString());
+                System.err.println("Error during AP registration.");
         }
         catch (RemoteException e) {
             System.err.println("Communication error: " + e.toString());
@@ -44,11 +52,11 @@ class ApImpl extends UnicastRemoteObject implements Ap {
                 ssidList.remove(index);
             index ++;
         }
-    }*/
+    }
 
     public int getMaxSSID() throws RemoteException {
        return maxSSID;
-    }
+    }*/
 
     public int getID() throws RemoteException {
        return id;
