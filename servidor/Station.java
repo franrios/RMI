@@ -46,7 +46,7 @@ class Station implements Serializable {
     }
 
     public String toString() {
-      return "\tMAC: " + this.mac + "\n\tIP: " +this.ip + "\n\tHostname: " +
-      this.hostname + "\n\tPosition: " +this.position;
+      return "\tMAC: " + mac + "\n\tIP: " +ip + "\n\tHostname: " +
+      hostname + "\n\tPosition: " +position;
     }
 }

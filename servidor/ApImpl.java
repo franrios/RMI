@@ -24,6 +24,7 @@ class ApImpl extends UnicastRemoteObject implements Ap {
                 station = new Station("01:02:03:04:05:06","station_1", new Position(3.0,2.0,13.0));
 
                 ap.connect(station);
+                ap.disconnect(station);
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -40,8 +41,8 @@ class ApImpl extends UnicastRemoteObject implements Ap {
             System.setSecurityManager(new SecurityManager());
 
         try {
-            this.srv = (Controller) Naming.lookup("//" + controllerHost + ":" + controllerPort + "/Controller");
-            if (this.srv.registerAp(this) == false)
+            srv = (Controller) Naming.lookup("//" + controllerHost + ":" + controllerPort + "/Controller");
+            if (srv.registerAp(this) == false)
                 System.err.println("Error during AP registration.");
         }
         catch (RemoteException e) {
@@ -53,10 +54,30 @@ class ApImpl extends UnicastRemoteObject implements Ap {
         }
     }
 
+    public String getID() throws RemoteException {
+       return id;
+    }
+
+    public Position getPosition() throws RemoteException {
+       return position;
+    }
+
+    public void setID(String id) throws RemoteException {
+       this.id = id;
+    }
+
+    public void setPosition(Position position) throws RemoteException {
+       this.position = position;
+    }
+
     public Association connect (Station station) throws RemoteException {
-        Association result = this.srv.connect(station);
+        Association result = srv.connect(station);
         System.out.println(result);
         return result;
+    }
+
+    public void disconnect (Station station) throws RemoteException {
+        srv.disconnect(station);
     }
 
     /*public void addSSID(String ssid) throws RemoteException {
@@ -75,20 +96,4 @@ class ApImpl extends UnicastRemoteObject implements Ap {
     public int getMaxSSID() throws RemoteException {
        return maxSSID;
     }*/
-
-    public String getID() throws RemoteException {
-       return this.id;
-    }
-
-    public Position getPosition() throws RemoteException {
-       return this.position;
-    }
-
-    public void setID(String id) throws RemoteException {
-       this.id = id;
-    }
-
-    public void setPosition(Position position) throws RemoteException {
-       this.position = position;
-    }
 }

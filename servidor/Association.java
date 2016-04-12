@@ -27,9 +27,9 @@ class Association implements Serializable {
 
     public String toString() {
       try {
-        return "\nThe station with the following parameters:\n" + this.station.toString() + 
-        "\nis associated with the following AP:\n\tID: " + this.ap.getID() + "\n\tPosition: "
-        + this.ap.getPosition();
+        return "\nThe station with the following parameters:\n" + station.toString() + 
+        "\nis associated with the following AP:\n\tID: " + ap.getID() + "\n\tPosition: "
+        + ap.getPosition();
       } catch (Exception e) {
         System.out.println(e);
         return null;

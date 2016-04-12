@@ -21,8 +21,8 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
 
     public Association connect(Station station) throws RemoteException{
       if (apList.size() > 0) {
-        Association aux = this.isStationConnected(station);
-        Ap nearestAp = this.searchNearestAP(station.getPosition());
+        Association aux = isStationConnected(station);
+        Ap nearestAp = searchNearestAP(station.getPosition());
         
         if (aux != null) {
           aux.setAp(nearestAp);
@@ -30,6 +30,7 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
           station.setIp(ipBank.assignIp());
           aux = new Association(nearestAp, station);
           associationList.add(aux);
+          System.out.println("Bien");
         }
 
         System.out.println(aux);
@@ -43,12 +44,23 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
       }
     }
 
+    public void disconnect(Station station) throws RemoteException{
+        Association aux = isStationConnected(station);
+        
+        if (aux != null) {
+          ipBank.freeIp(aux.getStation().getIp());
+          associationList.remove(aux);
+          System.out.println("The station with the following parameters:\n" 
+            + station.toString() + "\nhas been disconnected.");
+        }
+    }
+
     public Boolean registerAp(Ap ap) throws RemoteException{
       Boolean result = false;
 
-      if (this.isAPRegistered(ap))
+      if (isAPRegistered(ap))
         System.out.println("\nAP with ID " + ap.getID() + ", already registered.");
-      else if ((result = this.apList.add(ap)) == true)
+      else if ((result = apList.add(ap)) == true)
         System.out.println("\nAP with ID " + ap.getID() + ", successfully registered.");
       
 
@@ -58,7 +70,7 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
     private Association isStationConnected(Station station) throws RemoteException{
       Association aux = null;
 
-      for (Association i: this.associationList) {
+      for (Association i: associationList) {
         if (i.getStation().getMac().equals(station.getMac()))
           aux = i;
       }
@@ -68,7 +80,7 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
     private Boolean isAPRegistered(Ap ap) throws RemoteException{
       Boolean result = false;
 
-      for(Ap i: this.apList)
+      for(Ap i: apList)
         if (i.getID().equals(ap.getID()))
           result = true;
 
@@ -79,8 +91,8 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
       Ap nearestAp = null;
       double distance = -1.0;
 
-      if (this.apList.size() > 0) {
-        for (Ap i: this.apList) {
+      if (apList.size() > 0) {
+        for (Ap i: apList) {
           if ((distance < 0.0) || (i.getPosition().calculateDistance(position) < distance)) {
             nearestAp = i;
             distance = i.getPosition().calculateDistance(position);

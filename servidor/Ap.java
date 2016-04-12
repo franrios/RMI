@@ -9,4 +9,6 @@ interface Ap extends Remote {
 	Position getPosition() throws RemoteException;
 	void setID(String id) throws RemoteException;
 	void setPosition(Position position) throws RemoteException;
+	Association connect (Station station) throws RemoteException;
+	void disconnect (Station station) throws RemoteException;
 }
