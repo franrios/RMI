@@ -1,20 +1,28 @@
 import java.io.*;
 
 class Ssid implements Serializable {
-    private String ssidname;
+    private String ssidName;
     private String password;
 
-    SSID(String ssidname, String password) {
-      this.ssidname = ssidname;
+    Ssid (String ssidname, String password) {
+      this.ssidName = ssidName;
       this.password = password;
     }
 
-    public String getSsidname() {
-      return ssidname;
+    public String getSsidName() {
+      return ssidName;
     }
 
-    public int getPassword(){
+    public String getPassword(){
       return password;
+    }
+
+    public void setSsidName(String ssidName) {
+      this.ssidName = ssidName;    
+    }
+
+    public void setPassword(String password){
+      this.password = password;
     }
 
 

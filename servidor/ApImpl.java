@@ -13,6 +13,7 @@ class ApImpl extends UnicastRemoteObject implements Ap {
 
     static public void main (String args[]) {
         ApImpl ap = null;
+        Station station = null;
         
         try{
             if (args.length != 6)
@@ -20,7 +21,9 @@ class ApImpl extends UnicastRemoteObject implements Ap {
             else{
                 ap = new ApImpl(args[0],args[1], args[2], new Position(Double.parseDouble(args[3]),
                     Double.parseDouble(args[4]),Double.parseDouble(args[5])));
-                ap.connect();
+                station = new Station("192.168.45.72","01:02:03:04:05:06","station_1", new Position(3.0,2.0,13.0));
+
+                ap.connect(station);
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -50,10 +53,10 @@ class ApImpl extends UnicastRemoteObject implements Ap {
         }
     }
 
-    //Hacerlo en condiciones
-    public void connect () throws RemoteException {
-        Station station = new Station("192.168.45.72","01:02:03:04:05:06","station_1", new Position(3.0,2.0,13.0));
-        System.out.println(this.srv.connect(station));
+    public Association connect (Station station) throws RemoteException {
+        Association result = this.srv.connect(station);
+        System.out.println(result);
+        return result;
     }
 
     /*public void addSSID(String ssid) throws RemoteException {

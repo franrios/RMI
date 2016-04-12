@@ -44,9 +44,9 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
       Boolean result = false;
 
       if (this.isAPRegistered(ap))
-        System.out.println("AP with ID " + ap.getID() + ", already registered.");
+        System.out.println("\nAP with ID " + ap.getID() + ", already registered.");
       else if ((result = this.apList.add(ap)) == true)
-        System.out.println("AP with ID " + ap.getID() + ", successfully registered.");
+        System.out.println("\nAP with ID " + ap.getID() + ", successfully registered.");
       
 
       return result;
