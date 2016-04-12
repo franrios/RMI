@@ -8,4 +8,5 @@ interface Controller extends Remote {
                                                           create a new association */
   void disconnect(Station station) throws RemoteException;
   Boolean registerAp(Ap ap) throws RemoteException;
+  void unregisterAp(Ap ap) throws RemoteException;
 }

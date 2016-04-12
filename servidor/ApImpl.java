@@ -14,6 +14,7 @@ class ApImpl extends UnicastRemoteObject implements Ap {
     static public void main (String args[]) {
         ApImpl ap = null;
         Station station = null;
+        Association association =null;
         
         try{
             if (args.length != 6)
@@ -23,8 +24,8 @@ class ApImpl extends UnicastRemoteObject implements Ap {
                     Double.parseDouble(args[4]),Double.parseDouble(args[5])));
                 station = new Station("01:02:03:04:05:06","station_1", new Position(3.0,2.0,13.0));
 
-                ap.connect(station);
-                ap.disconnect(station);
+                association = ap.connect(station);
+                ap.disconnect(association.getStation());
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -44,6 +45,8 @@ class ApImpl extends UnicastRemoteObject implements Ap {
             srv = (Controller) Naming.lookup("//" + controllerHost + ":" + controllerPort + "/Controller");
             if (srv.registerAp(this) == false)
                 System.err.println("Error during AP registration.");
+            else
+                Runtime.getRuntime().addShutdownHook(new ShutdownHelper(this));
         }
         catch (RemoteException e) {
             System.err.println("Communication error: " + e.toString());
@@ -78,6 +81,14 @@ class ApImpl extends UnicastRemoteObject implements Ap {
 
     public void disconnect (Station station) throws RemoteException {
         srv.disconnect(station);
+    }
+
+    public void unregisterAp () {
+        try {
+            srv.unregisterAp(this);
+        } catch (RemoteException e) {
+            System.err.println("Communication error: " + e.toString());
+        }
     }
 
     /*public void addSSID(String ssid) throws RemoteException {

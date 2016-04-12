@@ -67,6 +67,20 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
       return result;
     }
 
+
+    public void unregisterAp(Ap ap) throws RemoteException{
+
+      if (isAPRegistered(ap)) {
+        for(Ap i: apList)
+          if (i.getID().equals(ap.getID())) {
+            apList.remove(i);
+            System.out.println("\nAP with ID " + ap.getID() + ", has been unregistered.");
+          } 
+      }
+      else
+        System.out.println("\nAP with ID " + ap.getID() + ", is not registered.");
+    }
+
     private Association isStationConnected(Station station) throws RemoteException{
       Association aux = null;
 
