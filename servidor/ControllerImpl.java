@@ -17,19 +17,27 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
         associationList = new LinkedList<Association>();
     }
 
-    public Ap connect(Station station) throws RemoteException{
-      Association aux = isStationConnected(station);
-      Ap defaultAp = new ApImpl("localhost", "54321","9999",new Position(5.0,5.0,14.0));
-      if (aux != null)
-        aux.setAp(defaultAp);
-      else
-        associationList.add(new Association(defaultAp, station));
+    public Association connect(Station station) throws RemoteException{
+      if (apList.size() > 0) {
+        Association aux = this.isStationConnected(station);
+        Ap nearestAp = this.searchNearestAP(station.getPosition());
+        
+        if (aux != null) {
+          aux.setAp(nearestAp);
+        } else {
+          aux = new Association(nearestAp, station);
+          associationList.add(aux);
+        }
 
-      System.out.println(station.getPosition().calculateDistance(defaultAp.getPosition()));
-      System.out.println(station.getPosition().toString());
-      System.out.println(defaultAp.getPosition().toString());
-
-      return defaultAp;
+        System.out.println(aux);
+        /*System.out.println(station.getPosition().calculateDistance(nearestAp.getPosition()));
+        System.out.println(station.getPosition().toString());
+        System.out.println(nearestAp.getPosition().toString());*/
+        return aux;
+      } else {
+        System.out.println("AP list is empty.");
+        return null;
+      }
     }
 
     public Boolean registerAp(Ap ap) throws RemoteException{
@@ -44,7 +52,7 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
       return result;
     }
 
-    public Association isStationConnected(Station station) throws RemoteException{
+    private Association isStationConnected(Station station) throws RemoteException{
       Association aux = null;
 
       for (Association i: this.associationList) {
@@ -62,5 +70,21 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
           result = true;
 
       return result;
+    }
+
+    private Ap searchNearestAP(Position position) throws RemoteException {
+      Ap nearestAp = null;
+      double distance = -1.0;
+
+      if (this.apList.size() > 0) {
+        for (Ap i: this.apList) {
+          if ((distance < 0.0) || (i.getPosition().calculateDistance(position) < distance)) {
+            nearestAp = i;
+            distance = i.getPosition().calculateDistance(position);
+          }
+        }
+      }
+
+      return nearestAp;
     }
 }

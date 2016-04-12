@@ -53,7 +53,7 @@ class ApImpl extends UnicastRemoteObject implements Ap {
     //Hacerlo en condiciones
     public void connect () throws RemoteException {
         Station station = new Station("192.168.45.72","01:02:03:04:05:06","station_1", new Position(3.0,2.0,13.0));
-        System.out.println(this.srv.connect(station).getID());
+        System.out.println(this.srv.connect(station));
     }
 
     /*public void addSSID(String ssid) throws RemoteException {
