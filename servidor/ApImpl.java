@@ -21,7 +21,7 @@ class ApImpl extends UnicastRemoteObject implements Ap {
             else{
                 ap = new ApImpl(args[0],args[1], args[2], new Position(Double.parseDouble(args[3]),
                     Double.parseDouble(args[4]),Double.parseDouble(args[5])));
-                station = new Station("192.168.45.72","01:02:03:04:05:06","station_1", new Position(3.0,2.0,13.0));
+                station = new Station("01:02:03:04:05:06","station_1", new Position(3.0,2.0,13.0));
 
                 ap.connect(station);
             }

@@ -7,6 +7,7 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
 
     private List<Ap> apList;
     private List<Association> associationList;
+    private IpBank ipBank;
 
   //  private List<Ssid> ssidlist;
 //    private List<Station> stationlist;
@@ -15,6 +16,7 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
         apList = new LinkedList<Ap>();
       //  ssidlist = new LinkedList<Ssid>();
         associationList = new LinkedList<Association>();
+        ipBank = IpBank.getInstance();
     }
 
     public Association connect(Station station) throws RemoteException{
@@ -25,6 +27,7 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
         if (aux != null) {
           aux.setAp(nearestAp);
         } else {
+          station.setIp(ipBank.assignIp());
           aux = new Association(nearestAp, station);
           associationList.add(aux);
         }

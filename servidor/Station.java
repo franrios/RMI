@@ -6,8 +6,8 @@ class Station implements Serializable {
     private String hostname;
     private Position position;
     
-    Station(String ip, String mac, String hostname, Position position) {
-      this.ip = ip;
+    Station(String mac, String hostname, Position position) {
+      this.ip = "";
       this.mac = mac;
       this.hostname = hostname;
       this.position = position;
