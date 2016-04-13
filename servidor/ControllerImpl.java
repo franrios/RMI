@@ -25,14 +25,17 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
         Ap nearestAp = searchNearestAP(station.getPosition());
         
         if (aux != null) {
-          aux.setAp(nearestAp);
+          aux.getStation().setPosition(station.getPosition());
+          if (!nearestAp.getID().equals(aux.getAp().getID())){
+            aux.setAp(nearestAp);
+            System.out.println(aux);
+          } 
         } else {
           station.setIp(ipBank.assignIp());
           aux = new Association(nearestAp, station);
           associationList.add(aux);
+          System.out.println(aux);
         }
-
-        System.out.println(aux);
 
         return aux;
       } else {

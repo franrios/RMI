@@ -75,7 +75,7 @@ class ApImpl extends UnicastRemoteObject implements Ap {
 
     public Association connect (Station station) throws RemoteException {
         Association result = srv.connect(station);
-        System.out.println(result);
+        //System.out.println(result);
         return result;
     }
 
@@ -83,7 +83,7 @@ class ApImpl extends UnicastRemoteObject implements Ap {
         srv.disconnect(station);
     }
 
-    public void unregisterAp () {
+    public void unregisterAp () throws RemoteException{
         try {
             srv.unregisterAp(this);
         } catch (RemoteException e) {

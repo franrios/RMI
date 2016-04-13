@@ -11,4 +11,5 @@ interface Ap extends Remote {
 	void setPosition(Position position) throws RemoteException;
 	Association connect (Station station) throws RemoteException;
 	void disconnect (Station station) throws RemoteException;
+	void unregisterAp () throws RemoteException;
 }
