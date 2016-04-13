@@ -25,7 +25,7 @@ class ApImpl extends UnicastRemoteObject implements Ap {
                 station = new Station("01:02:03:04:05:06","station_1", new Position(3.0,2.0,13.0));
 
                 association = ap.connect(station);
-                ap.disconnect(association.getStation());
+                //ap.disconnect(association.getStation());
             }
         } catch (Exception e) {
             System.out.println(e);

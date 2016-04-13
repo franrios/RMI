@@ -30,13 +30,10 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
           station.setIp(ipBank.assignIp());
           aux = new Association(nearestAp, station);
           associationList.add(aux);
-          System.out.println("Bien");
         }
 
         System.out.println(aux);
-        /*System.out.println(station.getPosition().calculateDistance(nearestAp.getPosition()));
-        System.out.println(station.getPosition().toString());
-        System.out.println(nearestAp.getPosition().toString());*/
+
         return aux;
       } else {
         System.out.println("AP list is empty.");
@@ -50,7 +47,7 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
         if (aux != null) {
           ipBank.freeIp(aux.getStation().getIp());
           associationList.remove(aux);
-          System.out.println("The station with the following parameters:\n" 
+          System.out.println("\nThe station with the following parameters:\n" 
             + station.toString() + "\nhas been disconnected.");
         }
     }
@@ -69,17 +66,25 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
 
 
     public void unregisterAp(Ap ap) throws RemoteException{
+        if (isAPRegistered(ap)) {
+          for(Ap i: apList)
+            if (i.getID().equals(ap.getID())) {
+              apList.remove(i);
+              System.out.println("\nAP with ID " + ap.getID() + ", has been unregistered.");
+            } 
 
-      if (isAPRegistered(ap)) {
-        for(Ap i: apList)
-          if (i.getID().equals(ap.getID())) {
-            apList.remove(i);
-            System.out.println("\nAP with ID " + ap.getID() + ", has been unregistered.");
-          } 
+          for(Association j: associationList)
+            if (j.getAp().getID().equals(ap.getID())) {
+              if (apList.size() > 0) {
+                j.setAp(searchNearestAP(j.getStation().getPosition()));
+                System.out.println("\nReconnecting stations...\n" + j);
+              } else {
+                System.out.println("\nThere is not any AP to reconnect the stations...");
+              }
+            }
+        } else
+          System.out.println("\nAP with ID " + ap.getID() + ", is not registered.");
       }
-      else
-        System.out.println("\nAP with ID " + ap.getID() + ", is not registered.");
-    }
 
     private Association isStationConnected(Station station) throws RemoteException{
       Association aux = null;
