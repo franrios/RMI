@@ -4,7 +4,7 @@ import java.rmi.server.*;
 class ControllerServer  {
     static public void main (String args[]) {
        if (args.length!=1) {
-            System.err.println("Uso: ControllerServer numPuertoRegistro");
+            System.err.println("Use: ControllerServer registryPortNumber");
             return;
         }
         if (System.getSecurityManager() == null) {
