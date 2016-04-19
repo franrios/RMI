@@ -5,8 +5,6 @@ import java.util.*;
 
 class ApImpl extends UnicastRemoteObject implements Ap {
 
-    //private List<String> ssidList;
-    //private int maxSSID;
     private String id;
     private Controller srv;
     private Position position;
@@ -25,7 +23,7 @@ class ApImpl extends UnicastRemoteObject implements Ap {
                 station = new Station("01:02:03:04:05:06","station_1", new Position(3.0,2.0,13.0));
 
                 association = ap.connect(station);
-                //ap.disconnect(association.getStation());
+                
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -35,8 +33,7 @@ class ApImpl extends UnicastRemoteObject implements Ap {
     ApImpl(String controllerHost, String controllerPort, String id, Position position) throws RemoteException {
         this.id = id;
         this.position = position;
-        //this.maxSSID = maxSSID;
-        //ssidList = new LinkedList<String>();
+
 
         if (System.getSecurityManager() == null)
             System.setSecurityManager(new SecurityManager());
@@ -75,7 +72,7 @@ class ApImpl extends UnicastRemoteObject implements Ap {
 
     public Association connect (Station station) throws RemoteException {
         Association result = srv.connect(station);
-        //System.out.println(result);
+        
         return result;
     }
 
@@ -90,21 +87,4 @@ class ApImpl extends UnicastRemoteObject implements Ap {
             System.err.println("Communication error: " + e.toString());
         }
     }
-
-    /*public void addSSID(String ssid) throws RemoteException {
-        ssidList.add(ssid);
-    }
-
-    public void removeSSID(String ssid) throws RemoteException {
-        int index = 0;
-        for (String i:ssidList){
-            if (i.isEqual(ssid))
-                ssidList.remove(index);
-            index ++;
-        }
-    }
-
-    public int getMaxSSID() throws RemoteException {
-       return maxSSID;
-    }*/
 }
