@@ -1,3 +1,5 @@
+import java.rmi.*;
+
 public class ShutdownHelper extends Thread {
 	Ap ap;
   Station station;
@@ -8,9 +10,13 @@ public class ShutdownHelper extends Thread {
       this.station = null;
    }
 
-   public ShutdownHelper(Ap ap, Station station) {
+   public ShutdownHelper(Station station) {
       super();
-      this.ap = ap;
+      try {
+        this.ap = station.getSrv();
+      } catch (RemoteException e) {
+        System.err.println("Communication Error: " + e.toString());
+      }
       this.station = station;
    }
 

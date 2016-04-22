@@ -25,11 +25,13 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
         if (aux != null) {
           aux.getStation().setPosition(station.getPosition());
           if (!nearestAp.getID().equals(aux.getAp().getID())){
+            station.reconnect(nearestAp);
             aux.setAp(nearestAp);
             System.out.println(aux);
           } 
         } else {
           station.setIp(ipBank.assignIp());
+          station.reconnect(nearestAp);
           aux = new Association(nearestAp, station);
           associationList.add(aux);
           System.out.println(aux);
@@ -49,7 +51,8 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
           ipBank.freeIp(aux.getStation().getIp());
           associationList.remove(aux);
           System.out.println("\nThe station with the following parameters:\n" 
-            + station.toString() + "\nhas been disconnected.");
+            + "\tMAC: " + station.getMac() + "\n\tIP: " +station.getIp() + "\n\tHostname: " +
+          station.getHostname() + "\n\tPosition: " +station.getPosition() + "\nhas been disconnected.");
         }
     }
 
@@ -67,6 +70,7 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
 
 
     public void unregisterAp(Ap ap) throws RemoteException{
+        Ap nearestAp;
         if (isAPRegistered(ap)) {
           for(Ap i: apList)
             if (i.getID().equals(ap.getID())) {
@@ -77,7 +81,9 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
           for(Association j: associationList)
             if (j.getAp().getID().equals(ap.getID())) {
               if (apList.size() > 0) {
-                j.setAp(searchNearestAP(j.getStation().getPosition()));
+                nearestAp = searchNearestAP(j.getStation().getPosition());
+                j.setAp(nearestAp);
+                j.getStation().reconnect(nearestAp);
                 System.out.println("\nReconnecting stations...\n" + j);
               } else {
                 System.out.println("\nThere is not any AP to reconnect the stations...");
