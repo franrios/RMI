@@ -20,10 +20,10 @@ AP4:
 	java -Djava.security.policy=servidor.permisos ApServer localhost 54321 4 0 2 0
 
 station1:
-	java -Djava.security.policy=servidor.permisos Station localhost 54321 1 01:01:01:01:01:01 host1 0 0 0
+	java -Djava.security.policy=servidor.permisos StationImpl localhost 54321 1 01:01:01:01:01:01 host1 0 0 0
 
 station2:
-	java -Djava.security.policy=servidor.permisos Station localhost 54321 1 02:02:02:02:02:02 host2 1 1 1
+	java -Djava.security.policy=servidor.permisos StationImpl localhost 54321 1 02:02:02:02:02:02 host2 1 1 1
 
 station3:
-	java -Djava.security.policy=servidor.permisos Station localhost 54321 1 03:03:03:03:03:03 host3 1 -4 3
+	java -Djava.security.policy=servidor.permisos StationImpl localhost 54321 1 03:03:03:03:03:03 host3 1 -4 3

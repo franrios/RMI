@@ -11,7 +11,7 @@ class ApImpl extends UnicastRemoteObject implements Ap {
 
     static public void main (String args[]) {
         ApImpl ap = null;
-        Station station = null;
+        StationImpl station = null;
         Association association =null;
         
         try{
@@ -20,7 +20,7 @@ class ApImpl extends UnicastRemoteObject implements Ap {
             else{
                 ap = new ApImpl(args[0],args[1], args[2], new Position(Double.parseDouble(args[3]),
                     Double.parseDouble(args[4]),Double.parseDouble(args[5])));
-                station = new Station("01:02:03:04:05:06","station_1", new Position(3.0,2.0,13.0));
+                station = new StationImpl("01:02:03:04:05:06","station_1", new Position(3.0,2.0,13.0), "localhost", "54321", "1");
 
                 association = ap.connect(station);
                 
@@ -72,7 +72,7 @@ class ApImpl extends UnicastRemoteObject implements Ap {
 
     public Association connect (Station station) throws RemoteException {
         Association result = srv.connect(station);
-        
+        System.out.println("Station " + station.getHostname() + " info updated.");
         return result;
     }
 
