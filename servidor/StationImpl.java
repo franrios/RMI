@@ -53,13 +53,15 @@ class StationImpl extends UnicastRemoteObject implements Station{
             for (; true;) {
               Thread.sleep(3000);
               station.randPosition(-2.0, 2.0);
+
+              System.out.println("New position: " + station.getPosition());
+              System.out.println("Connected to AP: " + station.getSrv().getID());
+
               station.getSrv().connect(station);
               Thread.sleep(500);
               Runtime.getRuntime().removeShutdownHook(shutdownHelper);
               shutdownHelper = new ShutdownHelper(station);
               Runtime.getRuntime().addShutdownHook(shutdownHelper);
-              System.out.println("New position: " + station.getPosition());
-              System.out.println("Connected to AP: " + station.getSrv().getID());
             }
         }
         catch (RemoteException e) {
