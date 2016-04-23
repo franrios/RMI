@@ -17,7 +17,7 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
         ipBank = IpBank.getInstance();
     }
 
-    public Association connect(Station station) throws RemoteException{
+    public synchronized Association connect(Station station) throws RemoteException{
       if (apList.size() > 0) {
         Association aux = isStationConnected(station);
         Ap nearestAp = searchNearestAP(station.getPosition());
@@ -44,7 +44,7 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
       }
     }
 
-    public void disconnect(Station station) throws RemoteException{
+    public synchronized void disconnect(Station station) throws RemoteException{
         Association aux = isStationConnected(station);
         
         if (aux != null) {
@@ -56,7 +56,7 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
         }
     }
 
-    public Boolean registerAp(Ap ap) throws RemoteException{
+    public synchronized Boolean registerAp(Ap ap) throws RemoteException{
       Boolean result = false;
 
       if (isAPRegistered(ap))
@@ -69,7 +69,7 @@ class ControllerImpl extends UnicastRemoteObject implements Controller {
     }
 
 
-    public void unregisterAp(Ap ap) throws RemoteException{
+    public synchronized void unregisterAp(Ap ap) throws RemoteException{
         Ap nearestAp;
         if (isAPRegistered(ap)) {
           for(Ap i: apList)
