@@ -9,11 +9,13 @@ class ApServer  {
         double x;
         double y;
         double z;
-
+       //Comprobamos que el número de argumentos es el correcto y si no imprimimos
+       //el error
        if (args.length!=6) {
             System.err.println("Use: ApServer controllerHost registryPortNumber id position(x) position(y) position(z)");
             return;
         } else {
+            //Asignamos cada argumento de linea de comandos a cada una de las variables
             controllerHost = args [0];
             registryPortNumber = args[1];
             id = args[2];

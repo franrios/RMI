@@ -3,6 +3,7 @@ import java.rmi.server.*;
 
 class ControllerServer  {
     static public void main (String args[]) {
+       //Comprobamos si el numero de argumentos es correcto
        if (args.length!=1) {
             System.err.println("Use: ControllerServer registryPortNumber");
             return;

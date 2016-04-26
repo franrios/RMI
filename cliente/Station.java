@@ -1,5 +1,7 @@
 import java.rmi.*;
-
+/*
+  Interfaz de la clase Station
+*/
 interface Station extends Remote {
     String getIp() throws RemoteException;
     String getMac() throws RemoteException;

@@ -29,7 +29,12 @@ class ApImpl extends UnicastRemoteObject implements Ap {
             System.out.println(e);
         }
     }
-
+    /* Constructor de la clase ApImpl. Recibe como parametros:
+       - El identificador del Controller de la red WiFi
+       - El puerto del Controller de la red WiFi
+       - El identificador del AP.
+       - La posición en la que se encuentra el AP en la red WiFi.
+     */
     ApImpl(String controllerHost, String controllerPort, String id, Position position) throws RemoteException {
         this.id = id;
         this.position = position;
@@ -53,33 +58,54 @@ class ApImpl extends UnicastRemoteObject implements Ap {
             e.printStackTrace();
         }
     }
-
+    /* 
+    Método para obtener el ID del AP
+     */
     public String getID() throws RemoteException {
        return id;
     }
-
+    /* 
+    Método para obtener la posición del AP
+     */
     public Position getPosition() throws RemoteException {
        return position;
     }
-
+    /* 
+    Método para insertar el ID del AP
+     */
     public void setID(String id) throws RemoteException {
        this.id = id;
     }
-
+    /* 
+    Método para insertar la posición en la que se encuentra el  AP
+     */
     public void setPosition(Position position) throws RemoteException {
        this.position = position;
     }
-
+    /* 
+    Método connect. 
+    Recibe como parámetro:
+      - La estación que se quiere asociar a este AP.
+    Devuelve:
+      - Un objeto de la clase Association que representa la conexión del cliente al AP.
+     */
     public Association connect (Station station) throws RemoteException {
         Association result = srv.connect(station);
         System.out.println("Station " + station.getHostname() + " info updated.");
         return result;
     }
-
+    /* 
+    Método disconnect. 
+    Recibe como parámetro:
+      - La estación que se quiere desasociar a este AP.
+     */
     public void disconnect (Station station) throws RemoteException {
         srv.disconnect(station);
     }
-
+    /* 
+    Método unregisterAp. 
+    Este metodo da la orden al Controller de que elimine al AP de su lista de APs.
+     */
     public void unregisterAp () throws RemoteException{
         try {
             srv.unregisterAp(this);

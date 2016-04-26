@@ -1,6 +1,8 @@
 
 import java.rmi.*;
-
+/*
+   Interfaz de la clase AP que representa a un punto de acceso
+*/
 interface Ap extends Remote {
 	String getID() throws RemoteException;
 	Position getPosition() throws RemoteException;

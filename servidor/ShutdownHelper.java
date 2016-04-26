@@ -1,15 +1,24 @@
 import java.rmi.*;
-
+/*
+  Clase ShutdownHelper.
+  Es un gestor del apagado,captura el evento Ctrl +C 
+  y se encarga de llamar al método correspondiente.
+*/
 public class ShutdownHelper extends Thread {
 	Ap ap;
   Station station;
 
+    /*
+      Constructor de la clase en el caso de capturar el evento para un AP.
+    */
    public ShutdownHelper(Ap ap) {
    		super();
    		this.ap = ap;
       this.station = null;
    }
-
+    /*
+      Constructor de la clase en el caso de capturar el evento para una estacion.
+    */
    public ShutdownHelper(Station station) {
       super();
       try {
